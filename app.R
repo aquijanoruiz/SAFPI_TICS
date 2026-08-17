@@ -4,6 +4,7 @@ library(ggplot2)
 library(scales)
 
 submission_timing_counts <- readRDS("data/submission_timing_counts.rds")
+teacher_scope_counts <- readRDS("data/teacher_scope_counts.rds")
 
 status_levels <- c(
   "on time",
@@ -67,7 +68,7 @@ ui <- fluidPage(
       )
     ),
     column(
-      width = 4,
+      width = 3,
       selectInput(
         inputId = "scope",
         label = "Teachers",
@@ -76,8 +77,16 @@ ui <- fluidPage(
       )
     ),
     column(
-      width = 4,
+      width = 3,
       uiOutput("scope_value_ui")
+    ),
+    column(
+      width = 3,
+      tags$div(
+        style = "margin-top: 25px;",
+        strong("Teachers included:"),
+        textOutput("teacher_count", inline = TRUE)
+      )
     )
   ),
   fluidRow(
@@ -162,6 +171,23 @@ server <- function(input, output, session) {
           scope == "General: all teachers pooled",
           form_number == as.integer(input$form_number)
         )
+    }
+  })
+
+  output$teacher_count <- renderText({
+    if (input$scope == "Zona" || input$scope == "Distrito") {
+      req(input$scope_value)
+
+      teacher_scope_counts %>%
+        filter(
+          scope == input$scope,
+          scope_value == input$scope_value
+        ) %>%
+        pull(n_teachers)
+    } else {
+      teacher_scope_counts %>%
+        filter(scope == "General: all teachers pooled") %>%
+        pull(n_teachers)
     }
   })
 

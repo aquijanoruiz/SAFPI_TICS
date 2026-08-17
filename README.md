@@ -6,13 +6,21 @@ The app can be deployed from GitHub to Posit Connect. The main Shiny entry point
 
 ## Data
 
-The app uses `data/submission_timing_counts.rds`, an aggregated dataset with counts by:
+The app uses two aggregated datasets:
+
+`data/submission_timing_counts.rds` contains counts by:
 
 - dashboard week
 - week end date
 - form number
 - submission timing category
 - scope: all teachers pooled, Zona, or Distrito
+
+`data/teacher_scope_counts.rds` contains the number of unique teachers included in each dashboard selection:
+
+- all teachers pooled
+- each Zona
+- each Distrito
 
 The deployed app does not include teacher names, citizenship IDs, or individual-level teacher records.
 
