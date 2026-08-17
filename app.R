@@ -63,7 +63,11 @@ ui <- fluidPage(
       selectInput(
         inputId = "form_number",
         label = "Form",
-        choices = c("Form 2" = "2", "Form 3" = "3", "Form 4" = "4"),
+        choices = c(
+          "Form 2: Student attendance" = "2",
+          "Form 3: Weekly curricular planning" = "3",
+          "Form 4: Weekly report and observations" = "4"
+        ),
         selected = "3"
       )
     ),
